@@ -20,8 +20,18 @@ end
 
 def header
   system 'clear'
+  puts "####################"
   puts "Survey Elephant"
+  show_current_user
   ws
+end
+
+def show_current_user
+  if @current_user == nil
+    puts "Current User: None"
+  else
+    puts "Current User: " + @current_user.name
+  end
 end
 
 def wait

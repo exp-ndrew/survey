@@ -2,6 +2,7 @@ require './cli/helper_cli'
 
 @current_survey = nil
 @current_question = nil
+@current_user = nil
 
 def main_menu
   header
@@ -13,7 +14,7 @@ def main_menu
   puts "X > Exit"
   case gets.chomp.upcase
   when 'T'
-    start_survey
+    user_login
   when 'A'
     create_survey
   when 'E'
@@ -21,7 +22,7 @@ def main_menu
   when 'D'
     delete_survey
   when 'V'
-    view_results
+    list_responses
   when 'X'
     exit
   end

@@ -22,10 +22,6 @@ def delete_question
   edit_survey
 end
 
-def set_current_question
-
-end
-
 def list_questions
 
 end

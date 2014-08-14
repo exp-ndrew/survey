@@ -20,7 +20,7 @@ def start_survey
     ws
     list_answers
     puts "Enter answer id:"
-    Response.create(question_id: @current_question.id, answer_id: gets.chomp.to_i)
+    Response.create(question_id: @current_question.id, answer_id: gets.chomp.to_i, user_id: @current_user.id)
   end
   wait
   main_menu
@@ -68,6 +68,7 @@ def create_survey
   puts "Enter the title of your survey:"
   name = gets.chomp
   new_survey = Survey.create(:name => name)
+  @current_survey = new_survey
   puts "#{name} survey created!"
   wait
   create_question
@@ -97,10 +98,3 @@ def delete_survey
   wait
   main_menu
 end
-
-# list
-# set_current_(x) ..
-# show ..
-# edit
-# create ..
-# delete
