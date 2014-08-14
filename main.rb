@@ -1,5 +1,6 @@
 require 'pg'
 require 'active_record'
+require 'pry'
 require './lib/survey'
 require './lib/question'
 require './lib/answer'
@@ -7,6 +8,9 @@ require './lib/response'
 require './lib/user'
 
 ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))["development"])
+
+
+@current_survey = nil
 
 def ws
   puts "\n"
@@ -47,6 +51,28 @@ def start_survey
   puts "Enter the survey #:"
   num = gets.chomp.to_i
   choose_survey(num)
+  take_survey
+end
+
+def choose_survey survey_id
+  @current_survey = Survey.find_by(id: survey_id)
+end
+
+def take_survey
+  @current_question = nil
+
+  @current_survey.questions.each do |question|
+    @current_question = question
+    puts question.text
+    ws
+    question.answers.each do |ans|
+      puts ans.id.to_s + " - " + ans.text
+    end
+  end
+  puts "Enter answer id:"
+  Response.create(question_id: @current_question.id, answer_id: gets.chomp.to_i)
+  sleep 1.0
+  main_menu
 end
 
 def make_survey
@@ -65,10 +91,21 @@ def add_questions survey_id
   header
   puts "Enter a new question:"
   question_text = gets.chomp
-  Question.create(:text => question_text, :survey_id => survey_id)
+  question = Question.create(:text => question_text, :survey_id => survey_id)
   puts "New question added!"
-  sleep 0.4
-  add_questions(survey_id)
+  puts "Enter an answer:"
+  Answer.create(:text => gets.chomp, :question_id => question.id)
+  puts "Answer added!"
+  puts "Enter another answer:"
+  Answer.create(:text => gets.chomp, :question_id => question.id)
+  puts "Answer added!"
+  puts "Enter 'M' to return to the main menu or any key to add another question."
+  case gets.chomp.upcase
+  when 'M'
+    main_menu
+  else
+    add_questions(survey_id)
+  end
 end
 
 main_menu
