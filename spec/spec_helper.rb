@@ -12,8 +12,10 @@ ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))
 
 RSpec.configure do |config|
   config.after(:each) do
-    Survey.all.each { |survey| survey.destroy }
-    Question.all.each { |question| question.destroy }
-    Response.all.each { |response| response.destroy }
+    Survey.all.each { |x| x.destroy }
+    Question.all.each { |x| x.destroy }
+    Response.all.each { |x| x.destroy }
+    Answer.all.each { |x| x.destroy }
+    User.all.each { |x| x.destroy }
   end
 end
