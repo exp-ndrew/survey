@@ -1,7 +1,4 @@
 class Question < ActiveRecord::Base
   belongs_to :survey
-
-  def assign_to survey_id
-
-  end
+  has_and_belongs_to_many :responses
 end
