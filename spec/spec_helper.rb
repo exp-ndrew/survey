@@ -5,7 +5,9 @@ require 'shoulda/matchers'
 require 'pry'
 require 'survey'
 require 'question'
+require 'answer'
 require 'response'
+require 'user'
 
 
 ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))["test"])

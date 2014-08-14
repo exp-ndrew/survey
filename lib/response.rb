@@ -1,3 +1,5 @@
 class Response < ActiveRecord::Base
-  has_and_belongs_to_many :questions
+  belongs_to :user
+  belongs_to :answer
+  belongs_to :question
 end
