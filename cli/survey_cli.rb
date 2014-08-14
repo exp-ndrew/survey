@@ -22,7 +22,7 @@ def start_survey
     puts "Enter answer id:"
     Response.create(question_id: @current_question.id, answer_id: gets.chomp.to_i)
   end
-  sleep 1.0
+  wait
   main_menu
 end
 
@@ -34,24 +34,26 @@ def edit_survey
   @current_survey = Survey.find_by(id: num)
   puts "Editing: " + @current_survey.name
   puts "--------"
-  puts "Questions:"
   @current_survey.questions.each do |q|
+  puts "Question:"
     @current_question = q
-    ws
     puts q.id.to_s + " - " + q.text
     ws
     list_answers
   end
   puts "1 > Change survey name"
-  puts "2 > Edit a question"
+  puts "2 > Add a question"
   puts "3 > Remove a question"
-  case gets.chomp
+  puts "M > Main menu"
+  case gets.chomp.upcase
   when '1'
     change_survey_name
   when '2'
-    edit_question
+    create_question
   when '3'
     delete_question
+  when 'M'
+    main_menu
   end
 end
 
@@ -67,8 +69,8 @@ def create_survey
   name = gets.chomp
   new_survey = Survey.create(:name => name)
   puts "#{name} survey created!"
-  sleep 0.4
-  create_question(new_survey.id)
+  wait
+  create_question
 end
 
 def change_survey_name
@@ -76,6 +78,7 @@ def change_survey_name
   input = gets.chomp
   @current_survey.update(name: input)
   puts "Survey name changed to #{@current_survey.name}!"
+  wait
   edit_survey
 end
 
@@ -91,7 +94,7 @@ def delete_survey
   survey = Survey.find_by(id: num)
   survey.destroy
   puts "Survey deleted!"
-  sleep 0.5
+  wait
   main_menu
 end
 

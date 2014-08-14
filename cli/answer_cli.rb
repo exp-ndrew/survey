@@ -9,8 +9,8 @@ def list_answers
   puts "Answers:"
   @current_question.answers.each do |a|
     puts a.id.to_s + " - " + a.text
-    ws
   end
+  ws
 end
 
 def delete_answer

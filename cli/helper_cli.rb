@@ -23,3 +23,7 @@ def header
   puts "Survey Elephant"
   ws
 end
+
+def wait
+  sleep 0.5
+end
