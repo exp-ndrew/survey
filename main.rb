@@ -26,6 +26,7 @@ def main_menu
   header
   puts "T > Take a survey!"
   puts "A > Create a survey!"
+  puts "D > Delete a survey"
   puts "V > View survey results"
   puts "X > Exit"
   case gets.chomp.upcase
@@ -33,6 +34,8 @@ def main_menu
     start_survey
   when 'A'
     make_survey
+  when 'D'
+    delete_survey
   when 'V'
     view_results
   when 'X'
@@ -85,6 +88,23 @@ def make_survey
   puts "#{name} survey created!"
   sleep 0.4
   add_questions(new_survey.id)
+end
+
+def delete_survey
+  header
+  puts "Surveys:"
+  puts "------------"
+  Survey.all.each do |result|
+    puts result.id.to_s + " - " + result.name
+  end
+  ws
+  puts "Enter the # of the survey to delete:"
+  num = gets.chomp.to_i
+  survey = Survey.find_by(id: num)
+  survey.destroy
+  puts "Survey deleted!"
+  sleep 0.5
+  main_menu
 end
 
 def add_questions survey_id
