@@ -1,14 +1,11 @@
 require 'rspec'
-require 'pry'
 require 'pg'
+require 'active_record'
+require 'shoulda/matchers'
+require 'pry'
 require 'survey'
 require 'question'
 require 'response'
 
-ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))["test"])
 
-RSpec.configure do |config|
-  config.after(:each) do
-    Survey.all.each { |product| product.destroy }
-  end
-end
+ActiveRecord::Base.establish_connection(YAML::load(File.open('./db/config.yml'))["test"])
