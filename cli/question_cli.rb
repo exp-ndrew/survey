@@ -2,16 +2,16 @@ def create_question survey_id
   header
   puts "Enter a new question:"
   question_text = gets.chomp
-  question = Question.create(:text => question_text, :survey_id => survey_id)
+  @current_question = Question.create(:text => question_text, :survey_id => survey_id)
   puts "New question added!"
-  new_answer
-  new_answer
+  create_answer
+  create_answer
   puts "Enter 'M' to return to the main menu or any key to add another question."
   case gets.chomp.upcase
   when 'M'
     main_menu
   else
-    add_questions(survey_id)
+    create_question(survey_id)
   end
 end
 
@@ -34,3 +34,11 @@ end
 def show_question
 
 end
+
+
+# list
+# set_current_(x) ..
+# show ..
+# edit
+# create ..
+# delete
